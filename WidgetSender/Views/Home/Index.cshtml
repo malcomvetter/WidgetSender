@@ -1,0 +1,35 @@
+﻿@{
+    ViewBag.Title = "Welcome!";
+}
+
+<div class="jumbotron">
+    <h1><a href="/Widget">Send-A-Widget</a></h1>
+    <p class="lead">Hack This App.</p>
+        @if (!Request.IsAuthenticated)
+        {
+            <p><a href="/Account/Login">Login</a> to get started.</p>
+        }
+@if (!Request.IsAuthenticated)
+{
+    <p><a href="/Account/Login" class="btn btn-primary btn-lg">Log In &raquo;</a></p>
+}
+else
+{
+    <p><a href="/Widget" class="btn btn-primary btn-lg">Start Now &raquo;</a></p>
+}
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <h2>Print Invoice</h2>
+        <p>Click <a href="/Invoice.aspx?id=invoice.pdf">here</a>.</p>
+    </div>
+    <div class="col-md-4">
+        <h2>Welcome Message</h2>
+        <p>Click <a href="/XSS2.aspx?name=John+Smith">here</a>.</p>
+    </div>
+    <div class="col-md-4">
+        <h2>Picture Gallery</h2>
+        <p>Click <a href="/XSS1.aspx?img=postback.png">here</a>.</p>
+    </div>
+</div>

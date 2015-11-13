@@ -1,0 +1,36 @@
+﻿@model WebApplication1.Models.ManageUsersViewModel
+@using Microsoft.Owin.Security
+@{
+    ViewBag.Title = "Manage Users";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<p class="text-success">@ViewBag.StatusMessage</p>
+@using (Html.BeginForm("Users", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    if (Model.AppUsers.Count > 0)
+    {
+        <h4>Registered Users</h4>
+        <h5><a href="/Manage/AddUser">Add Users</a></h5>
+        <br /><br />
+        <table class="table">
+            <tbody>
+                <tr>
+                    <td>Name</td>
+                    <td>UserID</td>
+                    <td>Admin</td>
+                </tr>
+                @foreach (var appUser in Model.AppUsers)
+                {
+                    <tr>
+                        <td>@Html.Raw(appUser.Name)</td>
+                        <td>@Html.Raw(appUser.UserId)</td>
+                        <td><input type="checkbox" name="isAdmin" value="@appUser.IsAdmin"></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+}

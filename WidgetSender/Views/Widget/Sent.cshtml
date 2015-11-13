@@ -1,0 +1,19 @@
+﻿@model WebApplication1.Models.SendWidgetModel
+@{
+    if (Model != null && !string.IsNullOrWhiteSpace(Model.toEmail))
+    {
+        ViewBag.Title = "Widget Sent to " + Model.toEmail + "!";
+    }
+}
+
+<h2>@ViewBag.Title</h2>
+<br /><br />
+<p class="text-success">@ViewBag.StatusMessage</p>
+<div>
+    <h4>@Html.LabelFor(m => m.widgetMessage, new { @class = "control-label" })</h4>
+    <hr />
+    <div class="col-md-10">
+        <p>@Html.Raw(Model.widgetMessage)</p>
+    </div>
+</div>
+<br /><br />

@@ -1,0 +1,68 @@
+﻿@model WebApplication1.Models.SendWidgetModel
+@{
+    ViewBag.Title = "Widget Sender with Ajax & Web API!";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<p class="text-success">@ViewBag.StatusMessage</p>
+<div>
+    <div id="requestdiv">
+        @Html.AntiForgeryToken()
+        <h4>Send a Widget to a Friend!</h4>
+        <hr />
+        <div class="form-group">
+            @Html.LabelFor(m => m.toEmail, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.toEmail, new { id="recipient", @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.widgetMessage, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.widgetMessage, new { id="message", @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Send!" class="btn btn-default" onclick="SendWidget();"/>
+            </div>
+        </div>
+        <br />
+    </div>
+    <div id="resultdiv" style="display: none;" class = "form-control">
+        <div id="result" ></div>
+    </div>
+<script>
+    function SendWidget() {
+        $("#requestdiv").hide();
+        var widget = {
+            "Recipient": $("#recipient").val(),
+            "Message": $("#message").val(),
+        };
+        console.log(widget);
+        $.ajax({
+            type: "POST",
+            url: "/api/Widget",
+            data: JSON.stringify(widget),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            processData: true,
+            success: function (data, status, jqXHR) {
+                $("#requestdiv").hide();
+                $("#result").text(data);
+                $("#resultdiv").slideDown();
+                console.log("success..." + data);
+            },
+            error: function (xhr) {
+                console.log(xhr.responseText);
+                $("#result").text(xhr.responseText);
+            }
+        });
+    }
+</script>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+</div>
